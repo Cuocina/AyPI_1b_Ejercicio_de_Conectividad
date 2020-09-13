@@ -2,18 +2,93 @@
 //
 
 #include <iostream>
+using namespace std;
+const int CantidadIngresos = 6;
+const int TopeMatriz = 8;
+const int Conectado = 1;
+const int Desconectado = 0;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+
+void BlanquearMatriz(int matriz[TopeMatriz]);
+int ElementoValido();
+bool Conectados(int c[TopeMatriz], int a, int b);
+void Conectar(int c[TopeMatriz], int a, int b);
+void MostrarMatriz(int matriz[TopeMatriz]);
+
+int main() {
+	int p, q, x[TopeMatriz];
+	bool val = false;
+	BlanquearMatriz(x);
+	MostrarMatriz(x);
+	for (int numeroIngreso = 0; numeroIngreso < CantidadIngresos; ++numeroIngreso)
+	{
+		p = ElementoValido();
+		q = ElementoValido();
+
+		if (Conectados(x, p, q) == true)
+		{
+			cout << "Estan Conectados Hilda" << endl;
+		}
+		else 
+		{
+			Conectar(x, p, q);
+			cout << p << "-" << q << endl;
+			cout << "No estaban conectados pero ahora si Mabel" << endl;
+		}
+	}
+	return 0;
 }
 
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
+void BlanquearMatriz(int matriz[TopeMatriz])
+{
+	for (int i = 0; i < TopeMatriz; i++)
+	{
+		matriz[i] = i;
+	}
+}
+int ElementoValido()
+{
+	int num = 0;
+	do
+	{
+		cout << "Ingresar Numero" << endl;
+		cin >> num;
+	} while (num < 0 && num>7);
 
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
+	return num;
+}
+bool Conectados(int c[TopeMatriz], int a, int b)
+{
+	bool aux = false;
+	if (c[a] == c[b])
+	{
+		aux = true;
+	}
+
+	return aux;
+}
+void Conectar(int c[TopeMatriz], int a, int b)
+{
+	if (Conectados(c, a, b) == false)
+	{
+		int ConjuntoA = c[a];
+		int ConjuntoB = c[b];
+		for (int i = 0; i < TopeMatriz; i++)
+		{
+			if (c[i] == ConjuntoA)
+			{
+				c[i] = ConjuntoB;
+			}
+		}
+	}
+	
+}
+void MostrarMatriz(int matriz[TopeMatriz])
+{
+		for (int j = 0; j < TopeMatriz; j++)
+		{
+			cout << matriz[j] << "|";
+		}
+		cout << endl;
+}
+
